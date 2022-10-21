@@ -10,11 +10,11 @@
       <jdbc-url>jdbc:sqlite:C:\Users\msgeo\djangoMS\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="mydatabase" uuid="1bab938c-8abe-496c-9a7b-04ad71114d35">
+    <data-source source="LOCAL" name="mydatabase" uuid="59e4a2da-8dfa-4839-9ff9-345e826ce2a4">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\msgeo\djangoMS\mydatabase</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\maniek\PycharmProjects\djangoMS\mydatabase</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

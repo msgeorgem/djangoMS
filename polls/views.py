@@ -1,7 +1,9 @@
-from django.shortcuts import get_object_or_404,render
+from django.shortcuts import get_object_or_404,render,Http404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
+from datetime import datetime, timedelta
 
 # Create your views here.
 
@@ -20,14 +22,18 @@ from .models import Question,Choice
 #     return HttpResponse(template.render(context, request))
 #
 #
-# def detail(request, question_id):
-#     question = get_object_or_404(Question, pk=question_id)
-#     return render(request, 'polls/detail.html', {'question': question})
+def detail(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist ehe ehe")
+    return render(request, 'polls/detail.html', {'question': question})
 #
 #
 # def results(request, question_id):
 #     question = get_object_or_404(Question, pk=question_id)
 #     return render(request, 'polls/results.html', {'question': question})
+
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -35,7 +41,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.filter(pub_date__gte=(timezone.now() - timedelta(1/120))).order_by('-pub_date')[:5]
 
 
 class DetailView(generic.DetailView):
