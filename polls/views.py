@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.shortcuts import get_object_or_404,render,Http404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -41,7 +42,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.filter(pub_date__gte=(timezone.now() - timedelta(1/120))).order_by('-pub_date')[:5]
+        return Question.objects.filter(pub_date__gte=(timezone.now() - timedelta(1))).order_by('-pub_date')[:10]
 
 
 class DetailView(generic.DetailView):
@@ -65,7 +66,7 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
+        selected_choice.votes = F('votes') + 1
         selected_choice.save()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a

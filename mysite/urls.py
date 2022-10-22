@@ -16,6 +16,7 @@ Including another URLconf
 import os
 from django.contrib import admin
 from django.urls import include, path, re_path
+from django.views.generic import TemplateView
 from django.views.static import serve
 
 # Up two folders to serve "site" content
@@ -25,6 +26,8 @@ SITE_ROOT = os.path.join(BASE_DIR, '/Users/msgeo/djangoMS/mysite/site')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('polls/', include('polls.urls')),
+    path('hello/', include('hello.urls')),
+    path('', TemplateView.as_view(template_name='home/main.html')),
 
     re_path(r'^site/(?P<path>.*)$', serve,
             {'document_root': SITE_ROOT, 'show_indexes': True},
