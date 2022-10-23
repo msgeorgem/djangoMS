@@ -1,16 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
+{% extends "base_bootstrap.html" %}
+
+{% block content %}
+
+  {% if user.is_authenticated %}
+        Hi {{ user.username }}!
+        <p><a class="btn btn-primary" href="{% url 'logout' %}">Log Out</a>
+
+            {% else %}
+        <p>You are not logged in</p>
+        <p><a class="btn btn-primary" href="{% url 'login' %}">Log In</a>
+        <p>If you do not have an account please sign up</p>
+        <p><a class="btn btn-primary" href="{% url 'home:signup' %}">Sign Up</a>
+
+      {% endif %}
+<hr>
 
     <ul>
         <li><p><a href="/polls">A Polls Application</a></p></li>
         <li><p><a href="/hello">Test the hello</a></p></li>
         <li><p><a href="/admin">Admin the Polls Page</a></p></li>
+        <li><p><a href="/autos">Autos CRUD</a></p></li>
     </ul>
-</head>
-<body>
 
-</body>
-</html>
+
+
+
+
+{% endblock %}
