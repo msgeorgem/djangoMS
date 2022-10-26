@@ -4,9 +4,10 @@ from .views import SignUpView
 
 from . import views
 
-app_name = 'hello'
+app_name = 'home'
 urlpatterns = [
     path('', views.HomeView.as_view()),
+    path('', views.HomeView.as_view(), name='index'),
     path("signup/", SignUpView.as_view(), name="signup"),
 
 ]
