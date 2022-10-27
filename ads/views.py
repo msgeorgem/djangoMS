@@ -20,10 +20,12 @@ class AdDetailView(View):
     template_name = 'ads/ad_detail.html'
 
     def get(self, request, pk):
-        x = self.model.objects.get(id=pk)
-        comments = Comment.objects.filter(ad=x).order_by('-updated_at')
+        x = Ad.objects.get(id=pk)
+        m = get_object_or_404(Ad, id=pk)
+
+        comments = Comment.objects.filter(ad=m).order_by('-updated_at')
         comment_form = CommentForm()
-        context = {'ad': x, 'comments': comments, 'comment_form': comment_form}
+        context = {'ad':x, 'comments': comments, 'comment_form': comment_form}
         return render(request, self.template_name, context)
 
 
@@ -32,19 +34,19 @@ class AdCreateView(View):
     # List the fields to copy from the Article model to the Article form
     fields = ['title', 'text', 'price']
 
-    template_name = 'ads/ad_detail.html'
+    template_name = 'ads/ad_form.html'
     success_url = reverse_lazy('ads:all')
 
     def get(self, request, pk=None):
         form = CreateForm()
-        ctx = {'ad_detail': form}
+        ctx = {'ad_form': form}
         return render(request, self.template_name, ctx)
 
     def post(self, request, pk=None):
         form = CreateForm(request.POST, request.FILES or None)
 
         if not form.is_valid():
-            ctx = {'ad_detail': form}
+            ctx = {'ad_form': form}
             return render(request, self.template_name, ctx)
 
         # Add owner to the model before saving
@@ -60,13 +62,16 @@ class AdUpdateView(View):
     # This would make more sense
     # fields_exclude = ['owner', 'created_at', 'updated_at']
 
-    template_name = 'ads/ad_detail.html'
+    template_name = 'ads/ad_form.html'
     success_url = reverse_lazy('ads:all')
+    print(model)
 
     def get(self, request, pk):
         ad = get_object_or_404(Ad, id=pk, owner=self.request.user)
+        print(ad)
         form = CreateForm(instance=ad)
-        ctx = {'ad_detail': form}
+        print(ad.id)
+        ctx = {'ad_form': form}
         return render(request, self.template_name, ctx)
 
     def post(self, request, pk=None):
@@ -74,7 +79,7 @@ class AdUpdateView(View):
         form = CreateForm(request.POST, request.FILES or None, instance=ad)
 
         if not form.is_valid():
-            ctx = {'ad_detail': form}
+            ctx = {'ad_form': form}
             return render(request, self.template_name, ctx)
 
         pic = form.save(commit=False)
