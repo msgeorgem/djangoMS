@@ -8,5 +8,9 @@ setuptools          63.2.0
 sqlparse            0.4.3
 tzdata              2022.5
 humanize            4.4.0
+pics                0.2
+Pillow              9.2.0
+
+
 
 

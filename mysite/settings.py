@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*x)!2&iz1te*u#48yxu_sgt_k+cr6&ttv*xw&t4c+7=$dy4ci0'
+SECRET_KEY =
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django_extensions',  # Add
     'unescoo.apps.UnescooConfig',  # Add
     'autos.apps.AutosConfig',  # Add
+    'ads.apps.AdsConfig',
+    'crispy_forms',
+    'django.contrib.humanize',
 
 ]
 
@@ -68,6 +71,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+
+            'builtins': [
+                'home.templatetags.app_tags'
+            ]
+
         },
     },
 ]
